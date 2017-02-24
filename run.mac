@@ -1,0 +1,31 @@
+/vis/disable
+#/control/execute ./visu.mac 
+
+/gate/geometry/setMaterialDatabase ./GateMaterials.db
+/control/execute ./physics.mac
+/control/execute ./geometry.mac
+/control/execute ./phantomSphere.mac
+/control/execute ./attachToSystem.mac
+
+# INITIALIZE 
+/gate/run/initialize
+
+
+/control/execute sourceSphere.mac
+/gate/source/Na22/setActivity 2500000 becquerel
+
+/gate/geometry/rebuild
+
+#/control/execute ./digitizer.mac
+
+# ROOT Output format
+/gate/output/root/enable
+/gate/output/root/setFileName testRoot
+/gate/output/root/setRootSinglesFlag 1
+
+
+/gate/application/setTimeSlice     0.1  s
+/gate/application/setTimeStart     0.   s
+/gate/application/setTimeStop      0.1  s
+# S T A R T  the A C Q U I S I T I O N
+/gate/application/startDAQ

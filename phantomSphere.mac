@@ -1,0 +1,7 @@
+# PHANTOM sphere 
+/gate/world/daughters/name phantom
+/gate/world/daughters/insert sphere
+/gate/phantom/setMaterial PMMA
+/gate/phantom/geometry/setRmax 0.5 mm
+/gate/phantom/vis/setColor red
+/gate/phantom/vis/forceSolid

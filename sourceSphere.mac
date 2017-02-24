@@ -1,0 +1,16 @@
+/gate/source/addSource Na22
+
+
+/gate/source/Na22/setType backtoback
+/gate/source/Na22/gps/centre 0. 0. 0. cm
+/gate/source/Na22/gps/particle gamma
+/gate/source/Na22/gps/energytype Mono
+/gate/source/Na22/gps/monoenergy 0.511 MeV
+/gate/source/Na22/gps/type Volume
+/gate/source/Na22/gps/shape Sphere
+/gate/source/Na22/gps/radius 0.5 mm
+
+
+#/gate/source/Na22/visualize 1000 red 2 
+
+
