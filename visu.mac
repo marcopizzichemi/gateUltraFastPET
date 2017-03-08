@@ -7,4 +7,5 @@
 /vis/drawVolume
 /tracking/storeTrajectory 1
 /vis/scene/endOfEventAction accumulate
+/vis/scene/add/axes
 /vis/viewer/update

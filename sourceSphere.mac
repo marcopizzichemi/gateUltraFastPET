@@ -8,9 +8,11 @@
 /gate/source/Na22/gps/monoenergy 0.511 MeV
 /gate/source/Na22/gps/type Volume
 /gate/source/Na22/gps/shape Sphere
-/gate/source/Na22/gps/radius 0.5 mm
+/gate/source/Na22/gps/radius 0.15 mm
+/gate/source/Na22/gps/angtype iso
+/gate/source/Na22/gps/mintheta 0. deg
+/gate/source/Na22/gps/maxtheta 180. deg
+/gate/source/Na22/gps/minphi -3. deg
+/gate/source/Na22/gps/maxphi 3. deg
 
-
-#/gate/source/Na22/visualize 1000 red 2 
-
-
+#/gate/source/Na22/visualize 1000 red 2
