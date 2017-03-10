@@ -1,3 +1,9 @@
 #ignore .root files
 *.root
+#ignore libs
+*.d
+*.so
+#ignore the exectuable
 gateToString
+#ignore the output folder
+out/*
