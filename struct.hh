@@ -28,12 +28,30 @@ struct avgCryEnergyDep
   Int_t parentID;
   Int_t trackID;
   int   globalCryID;
+  Int_t    gantryID;
+  Int_t    rsectorID;
+  Int_t    moduleID;
+  Int_t    submoduleID;
+  Int_t    crystalID;
+  Int_t    layerID;
   float x;
   float y;
   float z;
   float sx;
   float sy;
   float sz;
+  float energy;
+  float time;
+};
+
+struct point
+{
+  Int_t eventID;
+  Int_t parentID;
+  Int_t trackID;
+  float x;
+  float y;
+  float z;
   float energy;
   float time;
 };

@@ -1,7 +1,151 @@
-# PHANTOM sphere 
-/gate/world/daughters/name phantom
+# PHANTOM spheres
+# from center of FOV to the edge
+/gate/world/daughters/name phantom_Z0_X0
 /gate/world/daughters/insert sphere
-/gate/phantom/setMaterial PMMA
-/gate/phantom/geometry/setRmax 0.15 mm
-/gate/phantom/vis/setColor red
-/gate/phantom/vis/forceSolid
+/gate/phantom_Z0_X0/setMaterial PMMA
+/gate/phantom_Z0_X0/geometry/setRmax 0.15 mm
+/gate/phantom_Z0_X0/vis/setColor red
+/gate/phantom_Z0_X0/vis/forceSolid
+
+/gate/world/daughters/name phantom_Z0_X1
+/gate/world/daughters/insert sphere
+/gate/phantom_Z0_X1/setMaterial PMMA
+/gate/phantom_Z0_X1/geometry/setRmax 0.15 mm
+/gate/phantom_Z0_X1/vis/setColor red
+/gate/phantom_Z0_X1/vis/forceSolid
+/gate/phantom_Z0_X1/placement/setTranslation 5. 0. 0. mm
+
+/gate/world/daughters/name phantom_Z0_X2
+/gate/world/daughters/insert sphere
+/gate/phantom_Z0_X2/setMaterial PMMA
+/gate/phantom_Z0_X2/geometry/setRmax 0.15 mm
+/gate/phantom_Z0_X2/vis/setColor red
+/gate/phantom_Z0_X2/vis/forceSolid
+/gate/phantom_Z0_X2/placement/setTranslation 10. 0. 0. mm
+
+/gate/world/daughters/name phantom_Z0_X3
+/gate/world/daughters/insert sphere
+/gate/phantom_Z0_X3/setMaterial PMMA
+/gate/phantom_Z0_X3/geometry/setRmax 0.15 mm
+/gate/phantom_Z0_X3/vis/setColor red
+/gate/phantom_Z0_X3/vis/forceSolid
+/gate/phantom_Z0_X3/placement/setTranslation 15. 0. 0. mm
+
+/gate/world/daughters/name phantom_Z0_X4
+/gate/world/daughters/insert sphere
+/gate/phantom_Z0_X4/setMaterial PMMA
+/gate/phantom_Z0_X4/geometry/setRmax 0.15 mm
+/gate/phantom_Z0_X4/vis/setColor red
+/gate/phantom_Z0_X4/vis/forceSolid
+/gate/phantom_Z0_X4/placement/setTranslation 25. 0. 0. mm
+
+/gate/world/daughters/name phantom_Z0_X5
+/gate/world/daughters/insert sphere
+/gate/phantom_Z0_X5/setMaterial PMMA
+/gate/phantom_Z0_X5/geometry/setRmax 0.15 mm
+/gate/phantom_Z0_X5/vis/setColor red
+/gate/phantom_Z0_X5/vis/forceSolid
+/gate/phantom_Z0_X5/placement/setTranslation 50. 0. 0. mm
+
+/gate/world/daughters/name phantom_Z0_X6
+/gate/world/daughters/insert sphere
+/gate/phantom_Z0_X6/setMaterial PMMA
+/gate/phantom_Z0_X6/geometry/setRmax 0.15 mm
+/gate/phantom_Z0_X6/vis/setColor red
+/gate/phantom_Z0_X6/vis/forceSolid
+/gate/phantom_Z0_X6/placement/setTranslation 75. 0. 0. mm
+
+/gate/world/daughters/name phantom_Z0_X7
+/gate/world/daughters/insert sphere
+/gate/phantom_Z0_X7/setMaterial PMMA
+/gate/phantom_Z0_X7/geometry/setRmax 0.15 mm
+/gate/phantom_Z0_X7/vis/setColor red
+/gate/phantom_Z0_X7/vis/forceSolid
+/gate/phantom_Z0_X7/placement/setTranslation 95. 0. 0. mm
+
+
+
+/gate/world/daughters/name phantom_Z1_X0
+/gate/world/daughters/insert sphere
+/gate/phantom_Z1_X0/setMaterial PMMA
+/gate/phantom_Z1_X0/geometry/setRmax 0.15 mm
+/gate/phantom_Z1_X0/vis/setColor red
+/gate/phantom_Z1_X0/vis/forceSolid
+/gate/phantom_Z0_X7/placement/setTranslation 0. 0. 52. mm
+
+/gate/world/daughters/name phantom_Z1_X1
+/gate/world/daughters/insert sphere
+/gate/phantom_Z1_X1/setMaterial PMMA
+/gate/phantom_Z1_X1/geometry/setRmax 0.15 mm
+/gate/phantom_Z1_X1/vis/setColor red
+/gate/phantom_Z1_X1/vis/forceSolid
+/gate/phantom_Z1_X1/placement/setTranslation 5. 0. 52. mm
+
+/gate/world/daughters/name phantom_Z1_X2
+/gate/world/daughters/insert sphere
+/gate/phantom_Z1_X2/setMaterial PMMA
+/gate/phantom_Z1_X2/geometry/setRmax 0.15 mm
+/gate/phantom_Z1_X2/vis/setColor red
+/gate/phantom_Z1_X2/vis/forceSolid
+/gate/phantom_Z1_X2/placement/setTranslation 10. 0. 52. mm
+
+/gate/world/daughters/name phantom_Z1_X3
+/gate/world/daughters/insert sphere
+/gate/phantom_Z1_X3/setMaterial PMMA
+/gate/phantom_Z1_X3/geometry/setRmax 0.15 mm
+/gate/phantom_Z1_X3/vis/setColor red
+/gate/phantom_Z1_X3/vis/forceSolid
+/gate/phantom_Z1_X3/placement/setTranslation 15. 0. 52. mm
+
+/gate/world/daughters/name phantom_Z1_X4
+/gate/world/daughters/insert sphere
+/gate/phantom_Z1_X4/setMaterial PMMA
+/gate/phantom_Z1_X4/geometry/setRmax 0.15 mm
+/gate/phantom_Z1_X4/vis/setColor red
+/gate/phantom_Z1_X4/vis/forceSolid
+/gate/phantom_Z1_X4/placement/setTranslation 25. 0. 52. mm
+
+/gate/world/daughters/name phantom_Z1_X5
+/gate/world/daughters/insert sphere
+/gate/phantom_Z1_X5/setMaterial PMMA
+/gate/phantom_Z1_X5/geometry/setRmax 0.15 mm
+/gate/phantom_Z1_X5/vis/setColor red
+/gate/phantom_Z1_X5/vis/forceSolid
+/gate/phantom_Z1_X5/placement/setTranslation 50. 0. 52. mm
+
+/gate/world/daughters/name phantom_Z1_X6
+/gate/world/daughters/insert sphere
+/gate/phantom_Z1_X6/setMaterial PMMA
+/gate/phantom_Z1_X6/geometry/setRmax 0.15 mm
+/gate/phantom_Z1_X6/vis/setColor red
+/gate/phantom_Z1_X6/vis/forceSolid
+/gate/phantom_Z1_X6/placement/setTranslation 75. 0. 52. mm
+
+/gate/world/daughters/name phantom_Z1_X7
+/gate/world/daughters/insert sphere
+/gate/phantom_Z1_X7/setMaterial PMMA
+/gate/phantom_Z1_X7/geometry/setRmax 0.15 mm
+/gate/phantom_Z1_X7/vis/setColor red
+/gate/phantom_Z1_X7/vis/forceSolid
+/gate/phantom_Z1_X7/placement/setTranslation 95. 0. 52. mm
+
+
+
+
+#/gate/phantom_Z0_X0/vis/setVisible 0
+#/gate/phantom_Z0_X1/vis/setVisible 0
+#/gate/phantom_Z0_X2/vis/setVisible 0
+#/gate/phantom_Z0_X3/vis/setVisible 0
+#/gate/phantom_Z0_X4/vis/setVisible 0
+#/gate/phantom_Z0_X5/vis/setVisible 0
+#/gate/phantom_Z0_X6/vis/setVisible 0
+#/gate/phantom_Z0_X7/vis/setVisible 0
+#
+#/gate/phantom_Z1_X0/vis/setVisible 0
+#/gate/phantom_Z1_X1/vis/setVisible 0
+#/gate/phantom_Z1_X2/vis/setVisible 0
+#/gate/phantom_Z1_X3/vis/setVisible 0
+#/gate/phantom_Z1_X4/vis/setVisible 0
+#/gate/phantom_Z1_X5/vis/setVisible 0
+#/gate/phantom_Z1_X6/vis/setVisible 0
+#/gate/phantom_Z1_X7/vis/setVisible 0

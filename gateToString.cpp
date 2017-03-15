@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <algorithm>    // std::sort
 #include "TROOT.h"
+#include "TRandom1.h"
 #include "TSystem.h"
 #include "TChain.h"
 #include "TH2D.h"
@@ -60,6 +61,12 @@ struct avgCryEnergyDep
   Int_t parentID;
   Int_t trackID;
   int   globalCryID;
+  Int_t gantryID;
+  Int_t rsectorID;
+  Int_t moduleID;
+  Int_t submoduleID;
+  Int_t crystalID;
+  Int_t layerID;
   float x;
   float y;
   float z;
@@ -70,17 +77,40 @@ struct avgCryEnergyDep
   float time;
 };
 
+struct point
+{
+  Int_t eventID;
+  Int_t parentID;
+  Int_t trackID;
+  float x;
+  float y;
+  float z;
+  float energy;
+  float time;
+};
+
 //function to compare deposition event struct vectors using the field time
 bool compareByTime(const enDep &a,const enDep  &b)
 {
   return a.time < b.time;
 }
 
+//smear the input value given a FWHM (abs value, i.e. NOT the percentage)
+Float_t gaussianSmear(Double_t mean,Double_t fwhm)
+{
+  Double_t sigma = fwhm/2.355;
+  TRandom *r1 = new TRandom1();
+  Double_t result = r1->Gaus(mean,sigma);
+  return result;
+}
+
 int main(int argc, char** argv)
 {
 
   if(argc<2) {
-    std::cout<<"You need to provide an directory (where your .root files, output by GATE, are) "<<std::endl ;
+    std::cout<<"You need at least to provide a directory (where your .root files, output by GATE, are) "<<std::endl ;
+    std::cout<<"USAGE:"<<std::endl ;
+    std::cout<<"gateToString input.root [output.root]"<<std::endl ;
     return 1;
   }
 
@@ -115,8 +145,8 @@ int main(int argc, char** argv)
   std::string filedir, inputfilename ;
   std::string filename, Moutputfilename, Poutputfilename ;
 
-  filedir = argv[1] ;
-  inputfilename = filedir + "*.root" ;
+  inputfilename = argv[1] ;
+  // inputfilename = filedir + "*.root" ;
 
   std::cout << "Input file name is " << inputfilename << std::endl;
   TChain *Hits = new TChain("Hits") ;
@@ -130,12 +160,15 @@ int main(int argc, char** argv)
   long int Randoms = 0;
   // Int_t   nbytes = 0;
 
-  TFile* outputFile = new TFile("../output.root","recreate");
+  std::string outputFileName = "output_of_gateToString.root";
+  if(argc > 2) outputFileName = argv[2];
+  TFile* outputFile = new TFile(outputFileName.c_str(),"recreate");
 
   TTree* outputTree = new TTree("test","test");
   // avgCryEnergyDep outAvg;
   std::vector<avgCryEnergyDep> averageDepEvents;
-  outputTree->Branch("avgCryEnergyDep","std::vector<avgCryEnergyDep>",&averageDepEvents);
+  std::vector<point> points;
+  outputTree->Branch("points","std::vector<point>",&points);
 
 
   //######################################################################################
@@ -356,11 +389,42 @@ int main(int argc, char** argv)
   Int_t eventsCheck = -1;
   std::vector<enDep> energyDeposition;
 
+  //variables for global id
   Int_t nRSectors          = 62;
   Int_t nModulesXRSector   = 1;
   Int_t nSubmodulesXModule = 16;
   Int_t nCrystalXSubmodule  = 4;
   Int_t nLayersXCrystal    = 1;
+
+  //######################################################################################
+  //#                        Parameters                                                  #
+  //######################################################################################
+  // gate geometry
+  float rmin = 130;
+  float crylength = 15;
+  //rsector
+  int repsec = 62;
+  float ang = 3.1415*2/repsec;
+  //module
+  int repmody = 1;
+  int repmodz = 1;
+  float arraymody = 13;
+  float arraymodz = 13;
+  //submod
+  int repsuby = 4;
+  int repsubz = 4;
+  float arraysuby = 3.2;
+  float arraysubz = 3.2;
+  //crystal
+  int repcryy = 2;
+  int repcryz = 2;
+  float arraycryy = 1.6;
+  float arraycryz = 1.6;
+
+  //detector parameters
+  bool smeared = true;
+  Double_t energyResolutionFWHM = 0.12; //12% FWHM @511, for the moment we take the same also for low energy...
+  Double_t doiResolutionFWHM = 2.8; //2.8mm doi res measured on the module
 
   // for (Int_t i = 0 ; i < (Int_t)(Hits->GetEntries()) ; i++)
   // {
@@ -369,9 +433,12 @@ int main(int argc, char** argv)
   // }
   // std::cout << std::endl;
 
-  // for (Int_t i = 0 ; i < (Int_t)(Hits->GetEntries()) ; i++)
+
   Int_t eventCounter = 0;
-  for (Int_t i = 0 ; i < 40 ; i++)
+  int statuscounter = 0;
+  for (Int_t i = 0 ; i < (Int_t)(Hits->GetEntries()) ; i++)
+  // for (Int_t i = 1244500 ; i < 1244611 ; i++)
+  // for (Int_t i = 0 ; i < 40 ; i++)
   {
     Hits->GetEntry(i); // each i is a energyDeposition
     // std::cout<< eventsCheck << " " << HITSeventID << " " << HITStrackID <<  std::endl;
@@ -430,6 +497,7 @@ int main(int argc, char** argv)
         // what's going on
         // std::vector<avgCryEnergyDep> averageDepEvents;
         averageDepEvents.clear();
+        points.clear();
         // now the en dep events are collected by crystal
         // run on each collection and find average
         for(int iColl = 0 ; iColl < separatedEnDep.size(); iColl++)
@@ -442,6 +510,12 @@ int main(int argc, char** argv)
           tempAvgEnDep.parentID = separatedEnDep.at(iColl).at(0).parentID;
           tempAvgEnDep.trackID = separatedEnDep.at(iColl).at(0).trackID;
           tempAvgEnDep.globalCryID = separatedEnDep.at(iColl).at(0).globalCryID;
+          tempAvgEnDep.gantryID = separatedEnDep.at(iColl).at(0).gantryID;
+          tempAvgEnDep.rsectorID = separatedEnDep.at(iColl).at(0).rsectorID;
+          tempAvgEnDep.moduleID = separatedEnDep.at(iColl).at(0).moduleID;
+          tempAvgEnDep.submoduleID = separatedEnDep.at(iColl).at(0).submoduleID;
+          tempAvgEnDep.crystalID = separatedEnDep.at(iColl).at(0).crystalID;
+          tempAvgEnDep.layerID = separatedEnDep.at(iColl).at(0).layerID;
           tempAvgEnDep.x = 0;
           tempAvgEnDep.y = 0;
           tempAvgEnDep.z = 0;
@@ -493,18 +567,68 @@ int main(int argc, char** argv)
         }
 
         // now output the reading of this event, like this
-        // eventID (same as )
-        if(averageDepEvents.size()>1) //single crystal pet makes no sense...
+        //calculate hit position, for each crystal
+
+        for(int iAvg = 0; iAvg < averageDepEvents.size(); iAvg++)
         {
-          // outAvg = averageDepEvents;
-          outputTree->Fill();
+          float ymod = ( (averageDepEvents[iAvg].moduleID % repmody) + 0.5 ) * (arraymody) - arraymody*(repmody/2.0);
+          float zmod = ( (averageDepEvents[iAvg].moduleID / repmody) + 0.5 ) * (arraymodz) - arraymodz*(repmodz/2.0);
+          float ysub = ( (averageDepEvents[iAvg].submoduleID % repsuby) + 0.5 ) * (arraysuby) - arraysuby*(repsuby/2.0);
+          float zsub = ( (averageDepEvents[iAvg].submoduleID / repsuby) + 0.5 ) * (arraysubz) - arraysubz*(repsubz/2.0);
+          float ycry = ( (averageDepEvents[iAvg].crystalID % repcryy) + 0.5 ) * (arraycryy) - arraycryy*(repcryy/2.0);
+          float zcry = ( (averageDepEvents[iAvg].crystalID / repcryy) + 0.5 ) * (arraycryz) - arraycryz*(repcryz/2.0);
+          float doiAbs = rmin + (averageDepEvents[iAvg].x + (crylength/2.0));
+          float xdoi;
+          if(smeared)
+            xdoi = (float) gaussianSmear(doiAbs,doiResolutionFWHM);
+          else
+            xdoi = doiAbs;
+
+          float yabs = ymod+ysub+ycry;
+          float zabs = zmod+zsub+zcry;
+          float x = xdoi*cos(ang*averageDepEvents[iAvg].rsectorID) - yabs*sin(ang*averageDepEvents[iAvg].rsectorID);
+          float y = xdoi*sin(ang*averageDepEvents[iAvg].rsectorID) + yabs*cos(ang*averageDepEvents[iAvg].rsectorID);
+          float z = zabs;
+
+          //debug
+          // if(averageDepEvents[iAvg].trackID > 4 && averageDepEvents.size() > 1)
+            // std::cout << i  << " " << averageDepEvents.size() << " " << averageDepEvents[iAvg].trackID << std::endl;
+          point tempPoint;
+
+          tempPoint.eventID = averageDepEvents[iAvg].eventID;
+          tempPoint.parentID = averageDepEvents[iAvg].parentID;
+          tempPoint.trackID = averageDepEvents[iAvg].trackID;
+
+          tempPoint.x = x;
+          tempPoint.y = y;
+          tempPoint.z = z;
+          tempPoint.time = averageDepEvents[iAvg].time;
+          if(smeared)
+          {
+            tempPoint.energy = (Float_t) gaussianSmear(averageDepEvents[iAvg].energy,averageDepEvents[iAvg].energy*energyResolutionFWHM);
+          }
+          else
+          {
+            tempPoint.energy = averageDepEvents[iAvg].energy;
+          }
+
+          points.push_back(tempPoint);
+        }
+
+        // outAvg = averageDepEvents;
+        outputTree->Fill();
+        // if(averageDepEvents.size()<3)
+        // {
+        //   // std::cout << eventCounter << " " << averageDepEvents[iAvg].globalCryID << " " << averageDepEvents[iAvg].time << " " << averageDepEvents[iAvg].energy << " " << averageDepEvents[iAvg].x << " " << averageDepEvents[iAvg].y << " " << averageDepEvents[iAvg].z << " " << averageDepEvents[iAvg].parentID << " " << averageDepEvents[iAvg].trackID <<   std::endl;
+        // }
+
           //
           // eventCounter++;
           // for(int iAvg = 0; iAvg < averageDepEvents.size() ; iAvg++)
           // {
           //   std::cout << eventCounter << " " << averageDepEvents[iAvg].globalCryID << " " << averageDepEvents[iAvg].time << " " << averageDepEvents[iAvg].energy << " " << averageDepEvents[iAvg].x << " " << averageDepEvents[iAvg].y << " " << averageDepEvents[iAvg].z << " " << averageDepEvents[iAvg].parentID << " " << averageDepEvents[iAvg].trackID <<   std::endl;
           // }
-        }
+        // }
 
       }
       // std::cout<< "----------------------" << std::endl;
@@ -513,10 +637,12 @@ int main(int argc, char** argv)
       //move to next pair of gammas, reset
       eventsCheck = HITSeventID;
       energyDeposition.clear();
+      // points.clear();
     }
     //continue (or start) adding to the event
 
     //first thing first, go back to the original parent. It can be
+    // std::cout << HITSeventID << " "<< HITStrackID << " " << HITSparentID << " " << HITSedep <<  std::endl;
 
     enDep hitDeposition;       //create a new endep struct
     hitDeposition.localPosX    = HITSlocalPosX;
@@ -541,8 +667,17 @@ int main(int argc, char** argv)
     energyDeposition.push_back(hitDeposition); //push it to the vector
     // if(HITStrackID > 2)
 
-  }
+    statuscounter++;
+    int perc = ((100*statuscounter)/HITSnentries); //should strictly have not decimal part, written like this...
+    if( (perc % 10) == 0 )
+    {
+      std::cout << "\r";
+      std::cout << perc << "% done... ";
+      // std::cout << statuscounter << std::endl;
+    }
 
+  }
+  std::cout << std::endl;
 
   // for (Int_t i = 0 ; i < COINCnentries ; i++)
   // {

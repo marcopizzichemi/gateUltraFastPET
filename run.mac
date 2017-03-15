@@ -3,7 +3,10 @@
 
 /gate/geometry/setMaterialDatabase ./GateMaterials.db
 /control/execute ./physics.mac
-/control/execute ./geometry.mac
+
+#/control/execute ./geometry.mac           # one ring new clearpem
+/control/execute ./geometry-complete.mac  # n plates clearpem
+
 /control/execute ./phantomSphere.mac
 /control/execute ./attachToSystem.mac
 
@@ -12,7 +15,24 @@
 
 
 /control/execute sourceSphere.mac
-/gate/source/Na22/setActivity 2500000 becquerel
+
+/gate/source/Na22_Z0_X0/setActivity 90000 becquerel
+/gate/source/Na22_Z0_X1/setActivity 90000 becquerel
+/gate/source/Na22_Z0_X2/setActivity 90000 becquerel
+/gate/source/Na22_Z0_X3/setActivity 90000 becquerel
+/gate/source/Na22_Z0_X4/setActivity 90000 becquerel
+/gate/source/Na22_Z0_X5/setActivity 90000 becquerel
+/gate/source/Na22_Z0_X6/setActivity 90000 becquerel
+/gate/source/Na22_Z0_X7/setActivity 90000 becquerel
+
+/gate/source/Na22_Z1_X0/setActivity 90000 becquerel
+/gate/source/Na22_Z1_X1/setActivity 90000 becquerel
+/gate/source/Na22_Z1_X2/setActivity 90000 becquerel
+/gate/source/Na22_Z1_X3/setActivity 90000 becquerel
+/gate/source/Na22_Z1_X4/setActivity 90000 becquerel
+/gate/source/Na22_Z1_X5/setActivity 90000 becquerel
+/gate/source/Na22_Z1_X6/setActivity 90000 becquerel
+/gate/source/Na22_Z1_X7/setActivity 90000 becquerel
 
 /gate/geometry/rebuild
 
@@ -20,12 +40,12 @@
 
 # ROOT Output format
 /gate/output/root/enable
-/gate/output/root/setFileName testRoot
-/gate/output/root/setRootSinglesFlag 1
-/gate/output/root/setRootCoincidencesFlag 1
+/gate/output/root/setFileName 90kbqNEMA
+/gate/output/root/setRootSinglesFlag 0
+/gate/output/root/setRootCoincidencesFlag 0
 
-/gate/application/setTimeSlice     0.01  s
+/gate/application/setTimeSlice     1  s
 /gate/application/setTimeStart     0.   s
-/gate/application/setTimeStop      0.01  s
+/gate/application/setTimeStop      1  s
 # S T A R T  the A C Q U I S I T I O N
 /gate/application/startDAQ
