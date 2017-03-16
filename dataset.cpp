@@ -93,15 +93,24 @@ int main(int argc, char** argv)
   std::vector<point> *points = 0;
   tree->SetBranchAddress("points",&points);
 
+  std::string::size_type t_point = inputfilename.find_last_of(".");
+  // path = path.substr(0,t);
+
+  std::string baseName = inputfilename.substr(0,t_point);
   //OUTPUT STREAMS
+  std::string ofs2cryName                = "./out/" + baseName + "2cry.root";
+  std::string ofs3cry_avgName            = "./out/" + baseName + "3cry-avg.root";
+  std::string ofs3cry_magicalComptonName = "./out/" + baseName + "3cry-magicalCompton.root";
+  std::string ofs3cry_effComptonName     = "./out/" + baseName + "3cry-effCompton.root";
+
   std::ofstream ofs2cry;
-  ofs2cry.open ("./out/points-2cry.txt", std::ofstream::out);
+  ofs2cry.open (ofs2cryName.c_str(), std::ofstream::out);
   std::ofstream ofs3cry_avg;
-  ofs3cry_avg.open ("./out/points-3cry-avg.txt", std::ofstream::out);
+  ofs3cry_avg.open (ofs3cry_avgName.c_str(), std::ofstream::out);
   std::ofstream ofs3cry_magicalCompton;
-  ofs3cry_magicalCompton.open ("./out/points-3cry-magicalCompton.txt", std::ofstream::out);
+  ofs3cry_magicalCompton.open (ofs3cry_magicalComptonName.c_str(), std::ofstream::out);
   std::ofstream ofs3cry_effCompton;
-  ofs3cry_effCompton.open ("./out/points-3cry-effCompton.txt", std::ofstream::out);
+  ofs3cry_effCompton.open (ofs3cry_effComptonName.c_str(), std::ofstream::out);
 
   //COUNTERS
   Int_t nsamples = tree->GetEntries();
@@ -269,7 +278,7 @@ int main(int argc, char** argv)
           //don't save the event for "reconstruction"
         }
       }
-      else // no crystal among the 3 has a deposition that enters the 511 window 
+      else // no crystal among the 3 has a deposition that enters the 511 window
       {
         //don't save the event for "reconstruction"
       }
