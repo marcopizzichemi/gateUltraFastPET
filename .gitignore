@@ -3,6 +3,7 @@
 #ignore libs
 *.d
 *.so
+*.cxx
 #ignore the exectuable
 gateToString
 dataset
