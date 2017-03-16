@@ -1,5 +1,5 @@
 // compile with
-// g++ -o dateset dataset.cpp `root-config --cflags --libs`
+// g++ -o dataset dataset.cpp `root-config --cflags --libs`
 
 // This program takes and output of gateToString, a root file
 // then produces a list of points in variuos text files
