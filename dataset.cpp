@@ -41,11 +41,24 @@
 #include "TCanvas.h"
 #include "TRandom.h"
 
+
+struct Pairs // definition fo a pair of points
+{
+  float x1;
+  float y1;
+  float z1;
+  float x2;
+  float y2;
+  float z2;
+} __attribute__((__packed__));
+
+
 struct point
 {
   Int_t eventID;
   Int_t parentID;
   Int_t trackID;
+  Int_t sourceID;
   float x;
   float y;
   float z;
@@ -53,9 +66,16 @@ struct point
   float time;
 };
 
+
+
 int main(int argc, char** argv)
 {
-
+  if(argc<2) {
+    std::cout<<"You need to provide an input file "<<std::endl ;
+    std::cout<<"USAGE:"<<std::endl ;
+    std::cout<<"dataset input.root "<<std::endl ;
+    return 1;
+  }
   //----------------------------------------------------------------------//
   //                                                                      //
   //                        ROOT STUFF                                    //
@@ -96,21 +116,50 @@ int main(int argc, char** argv)
   std::string::size_type t_point = inputfilename.find_last_of(".");
   // path = path.substr(0,t);
 
+  bool binary = true;
+
   std::string baseName = inputfilename.substr(0,t_point);
   //OUTPUT STREAMS
-  std::string ofs2cryName                = "./out/" + baseName + "2cry.root";
-  std::string ofs3cry_avgName            = "./out/" + baseName + "3cry-avg.root";
-  std::string ofs3cry_magicalComptonName = "./out/" + baseName + "3cry-magicalCompton.root";
-  std::string ofs3cry_effComptonName     = "./out/" + baseName + "3cry-effCompton.root";
+  std::string ofs2cryName                = "./out/" + baseName + "2cry";
+  std::string ofs3cry_avgName            = "./out/" + baseName + "3cry-avg";
+  std::string ofs3cry_magicalComptonName = "./out/" + baseName + "3cry-magicalCompton";
+  std::string ofs3cry_effComptonName     = "./out/" + baseName + "3cry-effCompton";
+
+  // Pairs pair;
 
   std::ofstream ofs2cry;
-  ofs2cry.open (ofs2cryName.c_str(), std::ofstream::out);
   std::ofstream ofs3cry_avg;
-  ofs3cry_avg.open (ofs3cry_avgName.c_str(), std::ofstream::out);
   std::ofstream ofs3cry_magicalCompton;
-  ofs3cry_magicalCompton.open (ofs3cry_magicalComptonName.c_str(), std::ofstream::out);
   std::ofstream ofs3cry_effCompton;
-  ofs3cry_effCompton.open (ofs3cry_effComptonName.c_str(), std::ofstream::out);
+
+
+  if(binary)
+  {
+    ofs2cryName+= ".bin";
+    ofs3cry_avgName+= ".bin";
+    ofs3cry_magicalComptonName+= ".bin";
+    ofs3cry_effComptonName+= ".bin";
+
+    ofs2cry.open (ofs2cryName.c_str(), std::ios::binary);
+    ofs3cry_avg.open (ofs3cry_avgName.c_str(), std::ios::binary);
+    ofs3cry_magicalCompton.open (ofs3cry_magicalComptonName.c_str(), std::ios::binary);
+    ofs3cry_effCompton.open (ofs3cry_effComptonName.c_str(), std::ios::binary);
+  }
+  else
+  {
+    ofs2cryName+= ".txt";
+    ofs3cry_avgName+= ".txt";
+    ofs3cry_magicalComptonName+= ".txt";
+    ofs3cry_effComptonName+= ".txt";
+
+    ofs2cry.open (ofs2cryName.c_str(), std::ofstream::out);
+    ofs3cry_avg.open (ofs3cry_avgName.c_str(), std::ofstream::out);
+    ofs3cry_magicalCompton.open (ofs3cry_magicalComptonName.c_str(), std::ofstream::out);
+    ofs3cry_effCompton.open (ofs3cry_effComptonName.c_str(), std::ofstream::out);
+
+  }
+
+
 
   //COUNTERS
   Int_t nsamples = tree->GetEntries();
@@ -131,7 +180,7 @@ int main(int argc, char** argv)
   for(int i = 0 ; i < nsamples ; i ++)
   {
     tree->GetEntry(i);
-
+    Pairs pair;  //the output pair
     //--------------------------//
     // 1 crystal hit            //
     //--------------------------//
@@ -150,16 +199,45 @@ int main(int argc, char** argv)
     {
       if(points->at(0).energy > 0.450 && points->at(0).energy < 0.650 && points->at(1).energy > 0.450 && points->at(1).energy < 0.650) //energy limits
       {
-        ofs2cry   << points->at(0).x << " "
-                  << points->at(0).y << " "
-                  << points->at(0).z << " "
-                  << points->at(1).x << " "
-                  << points->at(1).y << " "
-                  << points->at(1).z
-                  << std::endl;
+        if(binary)
+        {
+          pair.x1 = points->at(0).x;
+          pair.y1 = points->at(0).y;
+          pair.z1 = points->at(0).z;
+          pair.x2 = points->at(1).x;
+          pair.y2 = points->at(1).y;
+          pair.z2 = points->at(1).z;
+          ofs2cry.write((char*)&pair,sizeof(pair));
+        }
+        else
+        {
+          ofs2cry   << points->at(0).x << " "
+                    << points->at(0).y << " "
+                    << points->at(0).z << " "
+                    << points->at(1).x << " "
+                    << points->at(1).y << " "
+                    << points->at(1).z
+                    << std::endl;
+        }
+        //DEBUG
+        // std::cout   << points->at(0).x << " "
+        //           << points->at(0).y << " "
+        //           << points->at(0).z << " "
+        //           << points->at(1).x << " "
+        //           << points->at(1).y << " "
+        //           << points->at(1).z
+        //           << std::endl;
         onlyTwoCrystalsInEnergyWindow++; //baseline sensitivity
       }
       onlyTwoCrystals++;
+      //DEBUG
+      // std::cout << points->at(0).x << " "
+      //           << points->at(0).y << " "
+      //           << points->at(0).z << " "
+      //           << points->at(1).x << " "
+      //           << points->at(1).y << " "
+      //           << points->at(1).z
+      //           << std::endl;
     }
     //--------------------------//
 
@@ -213,13 +291,27 @@ int main(int argc, char** argv)
             }
           }
           //save in another file
-          ofs3cry_avg << points->at(SingleID).x << " "
-                      << points->at(SingleID).y << " "
-                      << points->at(SingleID).z << " "
-                      << temp_x << " "
-                      << temp_y << " "
-                      << temp_z
-                      << std::endl;
+          if(binary)
+          {
+            pair.x1 = points->at(SingleID).x;
+            pair.y1 = points->at(SingleID).y;
+            pair.z1 = points->at(SingleID).z;
+            pair.x2 = temp_x;
+            pair.y2 = temp_y;
+            pair.z2 = temp_z;
+            ofs3cry_avg.write((char*)&pair,sizeof(pair));
+          }
+          else
+          {
+            ofs3cry_avg << points->at(SingleID).x << " "
+                        << points->at(SingleID).y << " "
+                        << points->at(SingleID).z << " "
+                        << temp_x << " "
+                        << temp_y << " "
+                        << temp_z
+                        << std::endl;
+          }
+
 
           //---------------------------------------------//
           //strategy b: magical compton
@@ -238,14 +330,29 @@ int main(int argc, char** argv)
               }
             }
           }
+
           //now save only the single 511 and the position of first between the two comptons (100% efficient compton discrimination)
-          ofs3cry_magicalCompton << points->at(SingleID).x << " "
-                                 << points->at(SingleID).y << " "
-                                 << points->at(SingleID).z << " "
-                                 << points->at(firstCrystalID).x << " "
-                                 << points->at(firstCrystalID).y << " "
-                                 << points->at(firstCrystalID).z
-                                 << std::endl;
+          if(binary)
+          {
+            pair.x1 = points->at(SingleID).x;
+            pair.y1 = points->at(SingleID).y;
+            pair.z1 = points->at(SingleID).z;
+            pair.x2 = points->at(firstCrystalID).x;
+            pair.y2 = points->at(firstCrystalID).y;
+            pair.z2 = points->at(firstCrystalID).z;
+            ofs3cry_magicalCompton.write((char*)&pair,sizeof(pair));
+          }
+          else
+          {
+            ofs3cry_magicalCompton << points->at(SingleID).x << " "
+                                   << points->at(SingleID).y << " "
+                                   << points->at(SingleID).z << " "
+                                   << points->at(firstCrystalID).x << " "
+                                   << points->at(firstCrystalID).y << " "
+                                   << points->at(firstCrystalID).z
+                                   << std::endl;
+          }
+
 
           //---------------------------------------------//
           //strategy c: compton with efficiency
@@ -265,13 +372,28 @@ int main(int argc, char** argv)
             chosenCryID = firstCrystalID;
           else
             chosenCryID = otherID;
-          ofs3cry_effCompton << points->at(SingleID).x << " "
-                            << points->at(SingleID).y << " "
-                            << points->at(SingleID).z << " "
-                            << points->at(chosenCryID).x << " "
-                            << points->at(chosenCryID).y << " "
-                            << points->at(chosenCryID).z
-                            << std::endl;
+
+          if(binary)
+          {
+            pair.x1 = points->at(SingleID).x;
+            pair.y1 = points->at(SingleID).y;
+            pair.z1 = points->at(SingleID).z;
+            pair.x2 = points->at(chosenCryID).x;
+            pair.y2 = points->at(chosenCryID).y;
+            pair.z2 = points->at(chosenCryID).z;
+            ofs3cry_effCompton.write((char*)&pair,sizeof(pair));
+          }
+          else
+          {
+            ofs3cry_effCompton << points->at(SingleID).x    << " "
+                               << points->at(SingleID).y    << " "
+                               << points->at(SingleID).z    << " "
+                               << points->at(chosenCryID).x << " "
+                               << points->at(chosenCryID).y << " "
+                               << points->at(chosenCryID).z
+                               << std::endl;
+          }
+
         }
         else // the two scatter don't sum up to enter 511 window
         {

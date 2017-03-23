@@ -180,6 +180,168 @@
 
 
 
+#BIG SOURCES
+/gate/source/addSource Na22_Z0_X8
+/gate/source/Na22_Z0_X8/setType backtoback
+/gate/source/Na22_Z0_X8/gps/centre -5. 0. 0. mm
+/gate/source/Na22_Z0_X8/gps/particle gamma
+/gate/source/Na22_Z0_X8/gps/energytype Mono
+/gate/source/Na22_Z0_X8/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z0_X8/gps/type Volume
+/gate/source/Na22_Z0_X8/gps/shape Sphere
+/gate/source/Na22_Z0_X8/gps/radius 1 mm
+/gate/source/Na22_Z0_X8/gps/angtype iso
+
+/gate/source/addSource Na22_Z0_X9
+/gate/source/Na22_Z0_X9/setType backtoback
+/gate/source/Na22_Z0_X9/gps/centre -10. 0. 0. mm
+/gate/source/Na22_Z0_X9/gps/particle gamma
+/gate/source/Na22_Z0_X9/gps/energytype Mono
+/gate/source/Na22_Z0_X9/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z0_X9/gps/type Volume
+/gate/source/Na22_Z0_X9/gps/shape Sphere
+/gate/source/Na22_Z0_X9/gps/radius 1 mm
+/gate/source/Na22_Z0_X9/gps/angtype iso
+
+/gate/source/addSource Na22_Z0_X10
+/gate/source/Na22_Z0_X10/setType backtoback
+/gate/source/Na22_Z0_X10/gps/centre -15. 0. 0. mm
+/gate/source/Na22_Z0_X10/gps/particle gamma
+/gate/source/Na22_Z0_X10/gps/energytype Mono
+/gate/source/Na22_Z0_X10/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z0_X10/gps/type Volume
+/gate/source/Na22_Z0_X10/gps/shape Sphere
+/gate/source/Na22_Z0_X10/gps/radius 1 mm
+/gate/source/Na22_Z0_X10/gps/angtype iso
+
+/gate/source/addSource Na22_Z0_X11
+/gate/source/Na22_Z0_X11/setType backtoback
+/gate/source/Na22_Z0_X11/gps/centre -25. 0. 0. mm
+/gate/source/Na22_Z0_X11/gps/particle gamma
+/gate/source/Na22_Z0_X11/gps/energytype Mono
+/gate/source/Na22_Z0_X11/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z0_X11/gps/type Volume
+/gate/source/Na22_Z0_X11/gps/shape Sphere
+/gate/source/Na22_Z0_X11/gps/radius 1 mm
+/gate/source/Na22_Z0_X11/gps/angtype iso
+
+/gate/source/addSource Na22_Z0_X12
+/gate/source/Na22_Z0_X12/setType backtoback
+/gate/source/Na22_Z0_X12/gps/centre -50. 0. 0. mm
+/gate/source/Na22_Z0_X12/gps/particle gamma
+/gate/source/Na22_Z0_X12/gps/energytype Mono
+/gate/source/Na22_Z0_X12/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z0_X12/gps/type Volume
+/gate/source/Na22_Z0_X12/gps/shape Sphere
+/gate/source/Na22_Z0_X12/gps/radius 1 mm
+/gate/source/Na22_Z0_X12/gps/angtype iso
+
+/gate/source/addSource Na22_Z0_X13
+/gate/source/Na22_Z0_X13/setType backtoback
+/gate/source/Na22_Z0_X13/gps/centre -75. 0. 0. mm
+/gate/source/Na22_Z0_X13/gps/particle gamma
+/gate/source/Na22_Z0_X13/gps/energytype Mono
+/gate/source/Na22_Z0_X13/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z0_X13/gps/type Volume
+/gate/source/Na22_Z0_X13/gps/shape Sphere
+/gate/source/Na22_Z0_X13/gps/radius 1 mm
+/gate/source/Na22_Z0_X13/gps/angtype iso
+
+/gate/source/addSource Na22_Z0_X14
+/gate/source/Na22_Z0_X14/setType backtoback
+/gate/source/Na22_Z0_X14/gps/centre -95. 0. 0. mm
+/gate/source/Na22_Z0_X14/gps/particle gamma
+/gate/source/Na22_Z0_X14/gps/energytype Mono
+/gate/source/Na22_Z0_X14/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z0_X14/gps/type Volume
+/gate/source/Na22_Z0_X14/gps/shape Sphere
+/gate/source/Na22_Z0_X14/gps/radius 1 mm
+/gate/source/Na22_Z0_X14/gps/angtype iso
+
+
+
+
+
+
+/gate/source/addSource Na22_Z1_X8
+/gate/source/Na22_Z1_X8/setType backtoback
+/gate/source/Na22_Z1_X8/gps/centre -5. 0. 52. mm
+/gate/source/Na22_Z1_X8/gps/particle gamma
+/gate/source/Na22_Z1_X8/gps/energytype Mono
+/gate/source/Na22_Z1_X8/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z1_X8/gps/type Volume
+/gate/source/Na22_Z1_X8/gps/shape Sphere
+/gate/source/Na22_Z1_X8/gps/radius 1 mm
+/gate/source/Na22_Z1_X8/gps/angtype iso
+
+/gate/source/addSource Na22_Z1_X9
+/gate/source/Na22_Z1_X9/setType backtoback
+/gate/source/Na22_Z1_X9/gps/centre -10. 0. 52. mm
+/gate/source/Na22_Z1_X9/gps/particle gamma
+/gate/source/Na22_Z1_X9/gps/energytype Mono
+/gate/source/Na22_Z1_X9/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z1_X9/gps/type Volume
+/gate/source/Na22_Z1_X9/gps/shape Sphere
+/gate/source/Na22_Z1_X9/gps/radius 1 mm
+/gate/source/Na22_Z1_X9/gps/angtype iso
+
+/gate/source/addSource Na22_Z1_X10
+/gate/source/Na22_Z1_X10/setType backtoback
+/gate/source/Na22_Z1_X10/gps/centre -15. 0. 52. mm
+/gate/source/Na22_Z1_X10/gps/particle gamma
+/gate/source/Na22_Z1_X10/gps/energytype Mono
+/gate/source/Na22_Z1_X10/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z1_X10/gps/type Volume
+/gate/source/Na22_Z1_X10/gps/shape Sphere
+/gate/source/Na22_Z1_X10/gps/radius 1 mm
+/gate/source/Na22_Z1_X10/gps/angtype iso
+
+/gate/source/addSource Na22_Z1_X11
+/gate/source/Na22_Z1_X11/setType backtoback
+/gate/source/Na22_Z1_X11/gps/centre -25. 0. 52. mm
+/gate/source/Na22_Z1_X11/gps/particle gamma
+/gate/source/Na22_Z1_X11/gps/energytype Mono
+/gate/source/Na22_Z1_X11/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z1_X11/gps/type Volume
+/gate/source/Na22_Z1_X11/gps/shape Sphere
+/gate/source/Na22_Z1_X11/gps/radius 1 mm
+/gate/source/Na22_Z1_X11/gps/angtype iso
+
+/gate/source/addSource Na22_Z1_X12
+/gate/source/Na22_Z1_X12/setType backtoback
+/gate/source/Na22_Z1_X12/gps/centre -50. 0. 52. mm
+/gate/source/Na22_Z1_X12/gps/particle gamma
+/gate/source/Na22_Z1_X12/gps/energytype Mono
+/gate/source/Na22_Z1_X12/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z1_X12/gps/type Volume
+/gate/source/Na22_Z1_X12/gps/shape Sphere
+/gate/source/Na22_Z1_X12/gps/radius 1 mm
+/gate/source/Na22_Z1_X12/gps/angtype iso
+
+/gate/source/addSource Na22_Z1_X13
+/gate/source/Na22_Z1_X13/setType backtoback
+/gate/source/Na22_Z1_X13/gps/centre -75. 0. 52. mm
+/gate/source/Na22_Z1_X13/gps/particle gamma
+/gate/source/Na22_Z1_X13/gps/energytype Mono
+/gate/source/Na22_Z1_X13/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z1_X13/gps/type Volume
+/gate/source/Na22_Z1_X13/gps/shape Sphere
+/gate/source/Na22_Z1_X13/gps/radius 1 mm
+/gate/source/Na22_Z1_X13/gps/angtype iso
+
+/gate/source/addSource Na22_Z1_X14
+/gate/source/Na22_Z1_X14/setType backtoback
+/gate/source/Na22_Z1_X14/gps/centre -95. 0. 52. mm
+/gate/source/Na22_Z1_X14/gps/particle gamma
+/gate/source/Na22_Z1_X14/gps/energytype Mono
+/gate/source/Na22_Z1_X14/gps/monoenergy 0.511 MeV
+/gate/source/Na22_Z1_X14/gps/type Volume
+/gate/source/Na22_Z1_X14/gps/shape Sphere
+/gate/source/Na22_Z1_X14/gps/radius 1 mm
+/gate/source/Na22_Z1_X14/gps/angtype iso
+
+
+
 
 
 

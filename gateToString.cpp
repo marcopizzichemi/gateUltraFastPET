@@ -389,25 +389,20 @@ int main(int argc, char** argv)
   Int_t eventsCheck = -1;
   std::vector<enDep> energyDeposition;
 
-  //variables for global id
-  Int_t nRSectors          = 62;
-  Int_t nModulesXRSector   = 1;
-  Int_t nSubmodulesXModule = 16;
-  Int_t nCrystalXSubmodule  = 4;
-  Int_t nLayersXCrystal    = 1;
+
 
   //######################################################################################
   //#                        Parameters                                                  #
   //######################################################################################
   // gate geometry
-  float rmin = 130;
+  float rmin = 100;
   float crylength = 15;
   //rsector
-  int repsec = 62;
+  int repsec = 8;
   float ang = 3.1415*2/repsec;
   //module
-  int repmody = 1;
-  int repmodz = 1;
+  int repmody = 6;
+  int repmodz = 16;
   float arraymody = 13;
   float arraymodz = 13;
   //submod
@@ -420,6 +415,13 @@ int main(int argc, char** argv)
   int repcryz = 2;
   float arraycryy = 1.6;
   float arraycryz = 1.6;
+
+  //variables for global id
+  Int_t nRSectors          = repsec;
+  Int_t nModulesXRSector   = arraymodz*arraymody;
+  Int_t nSubmodulesXModule = repsubz*repsuby;
+  Int_t nCrystalXSubmodule  = repcryz*repcryy;
+  Int_t nLayersXCrystal    = 1;
 
   //detector parameters
   bool smeared = true;
